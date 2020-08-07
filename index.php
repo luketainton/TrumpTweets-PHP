@@ -1,6 +1,14 @@
 <?php
   $appname = "TrumpTweets";
 
+  // -- Matomo Tracking API init -- 
+  require_once "matomo.php";
+  $MATOMO_API_KEY = include(__DIR__ . '/matomo-api.php');
+  MatomoTracker::$URL = 'https://matomo.tainton.uk/';
+  $matomoTracker = new MatomoTracker( $idSite = 5 );
+  $matomoTracker->setTokenAuth($MATOMO_API_KEY);
+  $matomoTracker->doTrackPageView($appname);
+
   function curl_get_contents($url) {
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -54,24 +62,6 @@
     <!-- Custom styles for this template -->
     <link href="https://getbootstrap.com/docs/4.3/examples/cover/cover.css" rel="stylesheet">
     
-    
-
-    <!-- Matomo -->
-    <script type="text/javascript">
-      var _paq = window._paq = window._paq || [];
-      /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-      _paq.push(['trackPageView']);
-      _paq.push(['enableLinkTracking']);
-      (function() {
-        var u="//matomo.tainton.uk/";
-        _paq.push(['setTrackerUrl', u+'matomo.php']);
-        _paq.push(['setSiteId', '5']);
-        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-        g.type='text/javascript'; g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
-      })();
-    </script>
-    <noscript><p><img src="//matomo.tainton.uk/matomo.php?idsite=5&amp;rec=1" style="border:0;" alt="" /></p></noscript>
-    <!-- End Matomo Code -->
   </head>
 
   <body class="text-center">
