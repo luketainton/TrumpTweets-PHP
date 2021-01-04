@@ -7,7 +7,6 @@
   MatomoTracker::$URL = 'https://matomo.tainton.uk/';
   $matomoTracker = new MatomoTracker( $idSite = 3 );
   $matomoTracker->setTokenAuth($MATOMO_API_KEY);
-  $matomoTracker->doTrackPageView($appname);
 
   function curl_get_contents($url) {
     $ch = curl_init($url);
@@ -20,11 +19,17 @@
     return $data;
   }
 
+  // -- Get Tweet -- 
   $quote = json_decode(curl_get_contents('https://api.tronalddump.io/random/quote'));
   $date =  explode('T', $quote->appeared_at)[0];
   $year = explode('-', $date)[0];
   $month = DateTime::createFromFormat('!m', explode('-', $date)[1])->format('F');
   $day = explode('-', $date)[2];
+
+  // -- Matomo Tracking API: Set data and record visit -- 
+  $matomoTracker->setCustomDimension(1, $quote->value); // Tweet content
+  $matomoTracker->setCustomDimension(2, $quote->_embedded->source[0]->url); // Tweet URL
+  $matomoTracker->doTrackPageView($appname);
 ?>
 
 <!doctype html>
