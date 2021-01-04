@@ -29,6 +29,7 @@
   // -- Matomo Tracking API: Set data and record visit -- 
   $matomoTracker->setCustomDimension(1, $quote->value); // Tweet content
   $matomoTracker->setCustomDimension(2, $quote->_embedded->source[0]->url); // Tweet URL
+  $matomoTracker->setForceNewVisit(); // Force new visit - required to track every Tweet pulled from API
   $matomoTracker->doTrackPageView($appname);
 ?>
 
