@@ -5,7 +5,7 @@
   require_once "matomo.php";
   $MATOMO_API_KEY = include(__DIR__ . '/matomo-api.php');
   MatomoTracker::$URL = 'https://matomo.tainton.uk/';
-  $matomoTracker = new MatomoTracker( $idSite = 5 );
+  $matomoTracker = new MatomoTracker( $idSite = 3 );
   $matomoTracker->setTokenAuth($MATOMO_API_KEY);
   $matomoTracker->doTrackPageView($appname);
 
